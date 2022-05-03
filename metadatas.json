@@ -1,0 +1,41 @@
+[
+  {
+    "name": "#0",
+    "description": "",
+    "external_url": "",
+    "image": "ipfs://abcd/0.png",
+    "attributes": [
+      {
+        "value": "original",
+        "trait_type": "Rarity Gunung"
+      },
+      {
+        "value": "original",
+        "trait_type": "Rarity Jalan"
+      },
+      {
+        "value": "super rare",
+        "trait_type": "Rarity Matahari"
+      },
+      {
+        "value": "original",
+        "trait_type": "Rarity Sawah"
+      }
+    ],
+    "hash": "13131511",
+    "decodedHash": [
+      {
+        "1": 3
+      },
+      {
+        "1": 3
+      },
+      {
+        "1": 5
+      },
+      {
+        "1": 1
+      }
+    ]
+  }
+]
