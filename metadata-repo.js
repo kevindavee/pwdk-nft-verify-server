@@ -5,7 +5,7 @@ module.exports.getNonCommonCountByTokenIds = (tokenIds = []) => {
   const tokens = metadatas.filter(metadata => tokenIdsWithHash.includes(metadata.name));
   const rareTokens = tokens.filter(token => {
     const attributesValue = token.attributes.map(attr => attr.value);
-    return attributesValue.includes('rare');
+    return attributesValue.includes('rare') || attributesValue.includes('super rare');
   });
   return rareTokens.length;
 };
