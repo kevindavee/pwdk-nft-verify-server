@@ -29,7 +29,12 @@ app.post('/verify', async (req, res) => {
         };
     
         const wallet = new ethers.Wallet(web3Config.privateKey);
-        const newSignature = await wallet.signMessage(stringifiedTokensOfOwner);
+        const messageHash = ethers.utils.solidityKeccak256(
+            ['address', 'string'],
+            [address, stringifiedTokensOfOwner]
+        );
+        const messageHashBinary = ethers.utils.arrayify(messageHash);
+        const newSignature = await wallet.signMessage(messageHashBinary);
         return res.status(200).json({ 
             signature: newSignature
         });
