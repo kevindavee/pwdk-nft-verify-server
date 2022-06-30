@@ -3,6 +3,7 @@ config();
 
 const express = require('express');
 const { ethers } = require('ethers');
+const cors = require('cors');
 const { web3Config } = require('./config');
 const abi = require('./abi.json');
 const { getNonCommonCountByTokenIds } = require('./metadata-repo');
@@ -11,15 +12,16 @@ const rpcProvider = new ethers.providers.JsonRpcProvider(web3Config.rpcUrl);
 const nftContract = new ethers.Contract(web3Config.contractAddress, abi, rpcProvider);
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.post('/verify', async (req, res) => {
     try {
         const { address, signature } = req.body;
         const tokensOfOwner = await nftContract.tokensOfOwner(address);
         const tokens = tokensOfOwner.map(t => t.toNumber());
-        const stringifiedTokensOfOwner = JSON.stringify(tokens);
+        const stringifiedTokensOfOwner = JSON.stringify(tokens.join(','));
         const signerAddr = await ethers.utils.verifyMessage(stringifiedTokensOfOwner, signature);
-        if (signerAddr !== address) {
+        if (signerAddr.toLowerCase() !== address.toLowerCase()) {
             return res.status(403).json({ error: 'signature verification failed' });
         };
     
